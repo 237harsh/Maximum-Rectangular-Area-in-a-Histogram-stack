@@ -1,0 +1,67 @@
+long long getMaxArea(long long arr[], int n)
+    {
+  ///find nearest greater to right elemnt
+  //find nearest greater to left
+  //subtract (ngr-ngl)*arr[i](height);
+  //take maximum area;
+      vector<long long>sr(n,n),sl(n,-1);
+        
+      stack<long long>s1;
+      
+      for(int i=n-1;i>=0;i--)
+      {
+         if(s1.empty())
+         {
+             sr[i]=n;
+         }
+         else if(arr[s1.top()]<arr[i])
+            sr[i]=s1.top();
+            
+            else
+            {
+                while(!s1.empty()&&!(arr[s1.top()]<arr[i]))
+                s1.pop();
+                if(s1.empty())
+                sr[i]=n;
+                else
+                sr[i]=s1.top();
+                
+            }
+            
+            s1.push(i);
+      }
+      
+      while(!s1.empty())
+      s1.pop();
+      for(int i=0;i<n;i++)
+      {
+         if(s1.empty())
+         {
+             sl[i]=-1;
+         }
+         else if(arr[s1.top()]<arr[i])
+            sl[i]=s1.top();
+            
+            else
+            {
+                while(!s1.empty()&&!(arr[s1.top()]<arr[i]))
+                s1.pop();
+                if(s1.empty())
+                sl[i]=-1;
+                else
+                sl[i]=s1.top();
+                
+            }
+            
+            s1.push(i);
+      }
+      long long  max=0;
+      for(int i=0;i<n;i++)
+      {
+          if((sr[i]-sl[i]-1)*arr[i]>max)
+          max=(sr[i]-sl[i]-1)*arr[i];
+          
+      }
+      
+    return max;
+    }
